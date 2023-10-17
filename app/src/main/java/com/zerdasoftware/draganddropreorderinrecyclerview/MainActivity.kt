@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.util.Collections
 
 class MainActivity : AppCompatActivity() {
 
@@ -75,6 +76,15 @@ class MainActivity : AppCompatActivity() {
         val adapter = MyAdapter(newsArrayList)
 
         val swipeGesture = object : SwipeGesture (this){
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                val from_pos = viewHolder.adapterPosition
+                val to_pos = target.adapterPosition
+
+                Collections.swap(newsArrayList,from_pos,to_pos)
+                adapter.notifyItemMoved(from_pos,to_pos)
+                return false
+            }
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when(direction){
                     ItemTouchHelper.LEFT -> { adapter.deleteItem(viewHolder.adapterPosition) }
