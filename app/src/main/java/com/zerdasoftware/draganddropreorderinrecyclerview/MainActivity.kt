@@ -3,13 +3,13 @@ package com.zerdasoftware.draganddropreorderinrecyclerview
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var newRecyclerView:RecyclerView
+    private lateinit var newsRecyclerView:RecyclerView
     private lateinit var newsArrayList:ArrayList<News>
     lateinit var imageId:Array<Int>
     lateinit var heading:Array<String>
@@ -57,9 +57,9 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.lorem_ipsum_paragraph),
         )
 
-        newRecyclerView = findViewById(R.id.recyclerView)
-        newRecyclerView.layoutManager = LinearLayoutManager(this)
-        newRecyclerView.setHasFixedSize(true)
+        newsRecyclerView = findViewById(R.id.recyclerView)
+        newsRecyclerView.layoutManager = LinearLayoutManager(this)
+        newsRecyclerView.setHasFixedSize(true)
 
         newsArrayList = arrayListOf()
         getUserData()
@@ -72,8 +72,25 @@ class MainActivity : AppCompatActivity() {
             newsArrayList.add(news)
         }
 
-        var adapter = MyAdapter(newsArrayList)
-        newRecyclerView.adapter = adapter
+        val adapter = MyAdapter(newsArrayList)
+
+        val swipeGesture = object : SwipeGesture (this){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                when(direction){
+                    ItemTouchHelper.LEFT -> { adapter.deleteItem(viewHolder.adapterPosition) }
+
+                    ItemTouchHelper.RIGHT -> {
+                        val archiveItem = newsArrayList[viewHolder.adapterPosition]
+                        adapter.deleteItem(viewHolder.adapterPosition)
+                        adapter.addItem(newsArrayList.size,archiveItem)
+                    }
+                }
+            }
+        }
+
+        val touchHelper = ItemTouchHelper(swipeGesture)
+        touchHelper.attachToRecyclerView(newsRecyclerView)
+        newsRecyclerView.adapter = adapter
 
         adapter.setOnItemClickListener(object :MyAdapter.onItemClickListener{
             override fun onItemClick(position: Int) {

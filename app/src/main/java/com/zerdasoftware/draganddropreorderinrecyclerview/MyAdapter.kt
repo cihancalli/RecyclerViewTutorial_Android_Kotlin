@@ -15,6 +15,16 @@ class MyAdapter(private val newsList:ArrayList<News>): RecyclerView.Adapter<MyAd
 
     fun setOnItemClickListener(listener:onItemClickListener) { mListener = listener }
 
+    fun deleteItem(i:Int) {
+        newsList.removeAt(i)
+        notifyDataSetChanged()
+    }
+
+    fun addItem(i: Int,news:News) {
+        newsList.add(i,news)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item,parent,false)
         return MyViewHolder(itemView,mListener)
