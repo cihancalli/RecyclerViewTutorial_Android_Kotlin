@@ -113,6 +113,8 @@ class MainActivity : AppCompatActivity() {
 
         tempArrayList.addAll(newsArrayList)
 
+        tempArrayList.sortBy { it.heading }
+
         val adapter = MyAdapter(tempArrayList)
 
         val swipeGesture = object : SwipeGesture (this){
