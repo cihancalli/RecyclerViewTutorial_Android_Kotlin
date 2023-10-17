@@ -1,5 +1,6 @@
 package com.zerdasoftware.draganddropreorderinrecyclerview
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +20,11 @@ class MyAdapter(private val newsList:ArrayList<News>): RecyclerView.Adapter<MyAd
         return MyViewHolder(itemView,mListener)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = newsList[position]
         holder.titleImage.setImageResource(currentItem.titleImage)
-        holder.tvHeading.text = currentItem.heading
-
+        holder.tvHeading.text = "${position+1}-) ${currentItem.heading}"
     }
 
     override fun getItemCount(): Int { return newsList.size }

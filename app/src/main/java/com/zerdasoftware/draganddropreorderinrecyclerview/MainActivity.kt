@@ -1,5 +1,6 @@
 package com.zerdasoftware.draganddropreorderinrecyclerview
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var newsArrayList:ArrayList<News>
     lateinit var imageId:Array<Int>
     lateinit var heading:Array<String>
+    lateinit var news: Array<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,23 +32,36 @@ class MainActivity : AppCompatActivity() {
         )
 
         heading = arrayOf(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit volutpat erat, id auctor ex euismod at.",
-            "Sed blandit volutpat erat, id auctor ex euismod at. Aenean sapien nisl, dignissim et imperdiet vitae, dictum laoreet odio.",
-            "Donec volutpat eleifend condimentum. Duis gravida porta arcu, in tincidunt libero ornare vel. ",
-            "Cras nec vulputate urna, at efficitur neque. Aenean vel aliquet tortor. Fusce mattis eget nisi non rhoncus. ",
-            "Donec id viverra enim, eu gravida erat. Cras tempor ultricies fringilla. Aliquam iaculis augue nec odio blandit, vitae commodo ligula placerat.",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit volutpat erat, id auctor ex euismod at.",
-            "Sed blandit volutpat erat, id auctor ex euismod at. Aenean sapien nisl, dignissim et imperdiet vitae, dictum laoreet odio.",
-            "Donec volutpat eleifend condimentum. Duis gravida porta arcu, in tincidunt libero ornare vel. ",
-            "Cras nec vulputate urna, at efficitur neque. Aenean vel aliquet tortor. Fusce mattis eget nisi non rhoncus. ",
-            "Donec id viverra enim, eu gravida erat. Cras tempor ultricies fringilla. Aliquam iaculis augue nec odio blandit, vitae commodo ligula placerat.",
+            getString(R.string.lorem_ipsum_list_a),
+            getString(R.string.lorem_ipsum_list_b),
+            getString(R.string.lorem_ipsum_list_c),
+            getString(R.string.lorem_ipsum_list_d),
+            getString(R.string.lorem_ipsum_list_e),
+            getString(R.string.lorem_ipsum_list_a),
+            getString(R.string.lorem_ipsum_list_b),
+            getString(R.string.lorem_ipsum_list_c),
+            getString(R.string.lorem_ipsum_list_d),
+            getString(R.string.lorem_ipsum_list_e)
+        )
+
+        news = arrayOf(
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
         )
 
         newRecyclerView = findViewById(R.id.recyclerView)
         newRecyclerView.layoutManager = LinearLayoutManager(this)
         newRecyclerView.setHasFixedSize(true)
 
-        newsArrayList = arrayListOf<News>()
+        newsArrayList = arrayListOf()
         getUserData()
 
     }
@@ -62,7 +77,13 @@ class MainActivity : AppCompatActivity() {
 
         adapter.setOnItemClickListener(object :MyAdapter.onItemClickListener{
             override fun onItemClick(position: Int) {
-                Toast.makeText(this@MainActivity ,"You Clicked on item no. $position",Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@MainActivity ,"You Clicked on item no. $position",Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this@MainActivity,NewsActivity::class.java)
+                intent.putExtra("heading",newsArrayList[position].heading)
+                intent.putExtra("imageId",newsArrayList[position].titleImage)
+                intent.putExtra("news",news[position])
+                startActivity(intent)
             }
         })
     }

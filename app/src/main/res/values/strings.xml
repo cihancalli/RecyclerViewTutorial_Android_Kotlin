@@ -1,3 +1,13 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Drag and drop Reorder in Recycler View</string>
+
+    <string name="lorem_ipsum_heading">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="lorem_ipsum_paragraph">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="lorem_ipsum_list_a">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit volutpat erat, id auctor ex euismod at.</string>
+    <string name="lorem_ipsum_list_b">Sed blandit volutpat erat, id auctor ex euismod at. Aenean sapien nisl, dignissim et imperdiet vitae, dictum laoreet odio.</string>
+    <string name="lorem_ipsum_list_c">Donec volutpat eleifend condimentum. Duis gravida porta arcu, in tincidunt libero ornare vel. "</string>
+    <string name="lorem_ipsum_list_d">Cras nec vulputate urna, at efficitur neque. Aenean vel aliquet tortor. Fusce mattis eget nisi non rhoncus. "</string>
+    <string name="lorem_ipsum_list_e">Donec id viverra enim, eu gravida erat. Cras tempor ultricies fringilla. Aliquam iaculis augue nec odio blandit, vitae commodo ligula placerat.</string>
+
 </resources>
