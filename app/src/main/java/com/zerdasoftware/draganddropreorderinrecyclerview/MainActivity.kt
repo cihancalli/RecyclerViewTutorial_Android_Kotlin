@@ -2,6 +2,7 @@ package com.zerdasoftware.draganddropreorderinrecyclerview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -56,6 +57,13 @@ class MainActivity : AppCompatActivity() {
             newsArrayList.add(news)
         }
 
-        newRecyclerView.adapter = MyAdapter(newsArrayList)
+        var adapter = MyAdapter(newsArrayList)
+        newRecyclerView.adapter = adapter
+
+        adapter.setOnItemClickListener(object :MyAdapter.onItemClickListener{
+            override fun onItemClick(position: Int) {
+                Toast.makeText(this@MainActivity ,"You Clicked on item no. $position",Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
