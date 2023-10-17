@@ -1,17 +1,22 @@
 package com.zerdasoftware.draganddropreorderinrecyclerview
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.Collections
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var newsRecyclerView:RecyclerView
     private lateinit var newsArrayList:ArrayList<News>
+    private lateinit var tempArrayList:ArrayList<News>
     lateinit var imageId:Array<Int>
     lateinit var heading:Array<String>
     lateinit var news: Array<String>
@@ -63,8 +68,41 @@ class MainActivity : AppCompatActivity() {
         newsRecyclerView.setHasFixedSize(true)
 
         newsArrayList = arrayListOf()
+        tempArrayList = arrayListOf()
         getUserData()
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.menu_item,menu)
+        val item = menu?.findItem(R.id.search_action)
+        val searchView = item?.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean { return false }
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onQueryTextChange(newText: String?): Boolean {
+                tempArrayList.clear()
+                val searchText = newText!!.toLowerCase(Locale.getDefault())
+                if (searchText.isNotEmpty()){
+                    newsArrayList.forEach {
+                        if (it.heading.toLowerCase(Locale.getDefault()).contains(searchText)){ tempArrayList.add(it) }
+                    }
+                    newsRecyclerView.adapter!!.notifyDataSetChanged()
+                }else{
+                    tempArrayList.clear()
+                    tempArrayList.addAll(newsArrayList)
+                    newsRecyclerView.adapter!!.notifyDataSetChanged()
+                }
+
+                return false
+            }
+
+        })
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun getUserData() {
@@ -73,7 +111,9 @@ class MainActivity : AppCompatActivity() {
             newsArrayList.add(news)
         }
 
-        val adapter = MyAdapter(newsArrayList)
+        tempArrayList.addAll(newsArrayList)
+
+        val adapter = MyAdapter(tempArrayList)
 
         val swipeGesture = object : SwipeGesture (this){
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
