@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var imageId:Array<Int>
     lateinit var heading:Array<String>
     lateinit var news: Array<String>
+    lateinit var briefNews: Array<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -51,6 +52,19 @@ class MainActivity : AppCompatActivity() {
         )
 
         news = arrayOf(
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+            getString(R.string.lorem_ipsum_paragraph),
+        )
+
+        briefNews = arrayOf(
             getString(R.string.lorem_ipsum_paragraph),
             getString(R.string.lorem_ipsum_paragraph),
             getString(R.string.lorem_ipsum_paragraph),
@@ -107,7 +121,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getUserData() {
         for (i in imageId.indices){
-            val news = News(imageId[i],heading[i])
+            val news = News(imageId[i],heading[i],briefNews[i])
             newsArrayList.add(news)
         }
 
